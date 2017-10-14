@@ -4,9 +4,11 @@ import winston from 'winston';
 
 class TraceEventsLoader {
     static load(path) {
+        winston.info(chalk.green(`Loading ${path}`));
+        
         if (!fs.existsSync(path)) {
             winston.error(chalk.red(`${path} does not exist!`))
-            process.exit(0);
+            return;
         }
 
         const file = fs.readFileSync(path);
@@ -15,7 +17,7 @@ class TraceEventsLoader {
             return JSON.parse(file).sort(TraceEventsLoader.sortByTimeStamp)
         } catch(error) {
             winston.error(error);
-            process.exit(0);
+            return;
         }
     }
 

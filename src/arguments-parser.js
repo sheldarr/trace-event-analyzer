@@ -5,8 +5,8 @@ class ArgumentsParser {
     static parse(argv) {
         const args = require('minimist')(argv);
         
-        if (!args.path) {
-            winston.info(chalk.red('You must pass path argument e.g. --path=./trace.json'));
+        if (!args.paths) {
+            winston.info(chalk.red('You must pass paths argument e.g. --paths="./trace-event.json"'));
             process.exit(0);
         }
 
