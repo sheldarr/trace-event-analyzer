@@ -9,7 +9,7 @@ class ArgumentsParser {
             winston.info(chalk.red('You must pass path argument e.g. --path=./trace.json'));
             process.exit(0);
         }
-        
+
         return args;
     }
 }

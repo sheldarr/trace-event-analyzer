@@ -1,52 +1,29 @@
 import winston from 'winston';
 
-import events from './src/events';
 import ArgumentsParser from './src/arguments-parser';
-import TraceEventsLoader from './src/trace-events-loader';
+import ImmediateEventsAnalyzer from './src/immediate-events-analyzer';
 import StatisticsGenerator from './src/statistics-generator';
+import TraceEventsLoader from './src/trace-events-loader';
+import UniqueEventsAnalyzer from './src/unique-events-analyzer';
 
 const args = ArgumentsParser.parse(process.argv);
-const traceEvents = TraceEventsLoader.load(args.path);
+const events = TraceEventsLoader.load(args.path);
 
-let uniqueEventsNames = [];
+winston.info(`Provided args ${JSON.stringify(args, null, '\t')}`);
 
-traceEvents.forEach((traceEvent) => {
-    if(uniqueEventsNames.includes(traceEvent.name)) {
-        return;
-    }
+const uniqueEvents = args['unique-events'];
+if (uniqueEvents) {
+    const analysisSummary = UniqueEventsAnalyzer.analyze(events);
 
-    uniqueEventsNames.push(traceEvent.name);
-});
-
-const drawFrameEvents = traceEvents.filter((traceEvent) => {
-    return traceEvent.name === events.DRAW_FRAME;
-});
-
-const timestamps = drawFrameEvents.map((event) => {
-    return event.ts;
-});
-
-const deltas = [];
-
-for (let index = 0; index < timestamps.length; index++) {
-    if(index === 0) {
-        continue;
-    }
-
-    const delta = (timestamps[index] - timestamps[index - 1]) / 1000;
-
-    if(delta < 0) {
-        continue;
-    }
-
-    deltas.push(delta);
+    winston.info(JSON.stringify(analysisSummary, null, '\t'));
 }
 
-const fps = deltas.map((delta) => {
-    return 1000 / delta;
-});
-
-winston.info({
-    deltas: StatisticsGenerator.generate(deltas),
-    fps: StatisticsGenerator.generate(fps)
-});
+const immediateEvent = args['immediate-event'];
+if (immediateEvent) {
+    const analysisSummary = ImmediateEventsAnalyzer.analyze(events, immediateEvent);
+    
+    winston.info(JSON.stringify({
+        deltas: StatisticsGenerator.generate(analysisSummary.deltas),
+        eps: StatisticsGenerator.generate(analysisSummary.eps)
+    }, null, '\t'));
+}
