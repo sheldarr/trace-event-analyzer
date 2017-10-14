@@ -1,14 +1,15 @@
+import chalk from 'chalk';
 import winston from 'winston';
 
 class UniqueEventsAnalyzer{
     static analyze(events) {
-        winston.info(`Analysing unique events`)
+        winston.info(chalk.green('Analysing unique events'));
 
         let uniqueEvents = [];
         
         events.forEach((event) => {
             if (!event.name) {
-                winston.warn('Detected event with no name!')
+                winston.warn(chalk.yellow('Detected event with no name!'));
                 return;
             }
 

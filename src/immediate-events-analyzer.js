@@ -1,10 +1,11 @@
+import chalk from 'chalk';
 import winston from 'winston';
 
 const IMMEDIATE_EVENT_TYPE = 'I';
 
 class ImmediateEventsAnalyzer{
     static analyze(events, eventName) {
-        winston.info(`Analysing immediate event ${eventName}`)
+        winston.info(`${chalk.green('Analysing immediate event')} ${chalk.cyan(eventName)}`)
         if(!this.verify(events, eventName)) {
             return { 
                 deltas: [],
@@ -26,7 +27,7 @@ class ImmediateEventsAnalyzer{
             const delta = (filteredEvents[index].ts - filteredEvents[index - 1].ts) / 1000;
 
             if(delta < 0) {
-                winston.warn('Detected delta < 0!');
+                winston.warn(chalk.yellow('Detected delta < 0!'));
                 continue;
             }
         
@@ -42,13 +43,13 @@ class ImmediateEventsAnalyzer{
     }
 
     static verify(events, eventName) {
-        winston.info('Verification');
+        winston.info(chalk.green('Verification'));
 
         const filteredEvents = events.filter((event) => {
             return event.name === eventName;
         })
 
-        winston.info(`Found ${filteredEvents.length} events`)
+        winston.info(`${chalk.green('Found')} ${chalk.cyan(filteredEvents.length)} ${chalk.green('events')}`)
 
         if(filteredEvents.length === 0) {
             return false;
@@ -57,7 +58,7 @@ class ImmediateEventsAnalyzer{
         if(filteredEvents.some((event) => {
             return event.name === eventName && event.ph !== IMMEDIATE_EVENT_TYPE;
         })) {
-            winston.warn(`Found not immediate ${eventName} event!`);
+            winston.warn(`${chalk.yellow('Found not immediate')} ${chalk.cyan(eventName)} ${chalk.yellow('event!')}`);
             return false;
         }
 

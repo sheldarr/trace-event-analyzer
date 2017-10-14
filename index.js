@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import winston from 'winston';
 
 import ArgumentsParser from './src/arguments-parser';
@@ -9,7 +10,7 @@ import UniqueEventsAnalyzer from './src/unique-events-analyzer';
 const args = ArgumentsParser.parse(process.argv);
 const events = TraceEventsLoader.load(args.path);
 
-winston.info(`Provided args ${JSON.stringify(args, null, '\t')}`);
+winston.info(`${chalk.green('Provided args')} ${JSON.stringify(args, null, '\t')}`);
 
 const uniqueEvents = args['unique-events'];
 if (uniqueEvents) {
@@ -21,7 +22,7 @@ if (uniqueEvents) {
 const immediateEvent = args['immediate-event'];
 if (immediateEvent) {
     const analysisSummary = ImmediateEventsAnalyzer.analyze(events, immediateEvent);
-    
+
     winston.info(JSON.stringify({
         deltas: StatisticsGenerator.generate(analysisSummary.deltas),
         eps: StatisticsGenerator.generate(analysisSummary.eps)
