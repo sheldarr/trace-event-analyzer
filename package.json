@@ -15,6 +15,8 @@
   "dependencies": {
     "chalk": "^2.1.0",
     "minimist": "^1.2.0",
+    "percentile": "^1.2.0",
+    "simple-statistics": "^5.0.0",
     "winston": "^2.4.0"
   }
 }
