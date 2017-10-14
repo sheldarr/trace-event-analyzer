@@ -1,19 +1,12 @@
-import chalk from 'chalk';
-import percentile from 'percentile';
-import * as statistics from 'simple-statistics';
 import winston from 'winston';
 
 import events from './src/events';
+import ArgumentsParser from './src/arguments-parser';
 import TraceEventsLoader from './src/trace-events-loader';
+import StatisticsGenerator from './src/statistics-generator';
 
-const argv = require('minimist')(process.argv);
-
-if (!argv.path) {
-    winston.info(chalk.red('You must pass path argument e.g. --path=./trace.json'));
-    process.exit(0);
-}
-    
-const traceEvents = TraceEventsLoader.load(argv.path);
+const args = ArgumentsParser.parse(process.argv);
+const traceEvents = TraceEventsLoader.load(args.path);
 
 let uniqueEventsNames = [];
 
@@ -33,43 +26,27 @@ const timestamps = drawFrameEvents.map((event) => {
     return event.ts;
 });
 
-const diffs = [];
+const deltas = [];
 
 for (let index = 0; index < timestamps.length; index++) {
     if(index === 0) {
         continue;
     }
 
-    const diff = (timestamps[index] - timestamps[index - 1]) / 1000;
+    const delta = (timestamps[index] - timestamps[index - 1]) / 1000;
 
-    if(diff < 0) {
+    if(delta < 0) {
         continue;
     }
 
-    diffs.push(diff);
+    deltas.push(delta);
 }
 
-const fps = diffs.map((diff) => {
-    return 1000 / diff;
+const fps = deltas.map((delta) => {
+    return 1000 / delta;
 });
 
 winston.info({
-    diffs: {
-        min: statistics.min(diffs),
-        max: statistics.max(diffs),
-        mean: statistics.mean(diffs),
-        median: statistics.median(diffs),
-        standardDeviation: statistics.standardDeviation(diffs),
-        variance: statistics.variance(diffs),
-        p90: percentile(90, diffs)
-    },
-    fps: {
-        min: statistics.min(fps),
-        max: statistics.max(fps),
-        mean: statistics.mean(fps),
-        median: statistics.median(fps),
-        standardDeviation: statistics.standardDeviation(fps),
-        variance: statistics.variance(fps),
-        p90: percentile(90, fps)
-    }
+    deltas: StatisticsGenerator.generate(deltas),
+    fps: StatisticsGenerator.generate(fps)
 });
