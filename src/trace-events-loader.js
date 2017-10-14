@@ -9,18 +9,14 @@ class TraceEventsLoader {
             process.exit(0);
         }
 
-        const file = fs.readFile(path);
-
-        let traceEvents;
+        const file = fs.readFileSync(path);
 
         try {
-            traceEvents = JSON.parse(file);
+            return JSON.parse(file);
         } catch(error) {
             winston.error(error);
             process.exit(0);
         }
-
-        return traceEvents;
     }
 }
 
