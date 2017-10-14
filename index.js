@@ -23,8 +23,10 @@ const immediateEvent = args['immediate-event'];
 if (immediateEvent) {
     const analysisSummary = ImmediateEventsAnalyzer.analyze(events, immediateEvent);
 
-    winston.info(JSON.stringify({
-        deltas: StatisticsGenerator.generate(analysisSummary.deltas),
-        eps: StatisticsGenerator.generate(analysisSummary.eps)
-    }, null, '\t'));
+    if(analysisSummary) {
+        winston.info(JSON.stringify({
+            deltas: StatisticsGenerator.generate(analysisSummary.deltas),
+            eps: StatisticsGenerator.generate(analysisSummary.eps)
+        }, null, '\t'));
+    }
 }

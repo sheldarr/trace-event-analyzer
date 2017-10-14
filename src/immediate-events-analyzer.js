@@ -7,10 +7,7 @@ class ImmediateEventsAnalyzer{
     static analyze(events, eventName) {
         winston.info(`${chalk.green('Analysing immediate event')} ${chalk.cyan(eventName)}`)
         if(!this.verify(events, eventName)) {
-            return { 
-                deltas: [],
-                eps:[]
-            };
+            return;
         }
 
         const filteredEvents = events.filter((event) => {

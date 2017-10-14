@@ -25,14 +25,14 @@ class UniqueEventsAnalyzer{
             });
         });
 
-        uniqueEvents.sort(UniqueEventsAnalyzer.sortAlphabetically);
+        uniqueEvents.sort(UniqueEventsAnalyzer.sortByName);
 
         return uniqueEvents.map((event) => {
             return `${event.name}__${event.ph}`;
         })
     }
 
-    static sortAlphabetically(a, b) {
+    static sortByName(a, b) {
         if(a.name < b.name) {
             return -1;
         }
