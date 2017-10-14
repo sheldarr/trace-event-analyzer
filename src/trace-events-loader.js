@@ -8,6 +8,19 @@ class TraceEventsLoader {
             winston.error(chalk.red(`${path} does not exist!`))
             process.exit(0);
         }
+
+        const file = fs.readFile(path);
+
+        let traceEvents;
+
+        try {
+            traceEvents = JSON.parse(file);
+        } catch(error) {
+            winston.error(error);
+            process.exit(0);
+        }
+
+        return traceEvents;
     }
 }
 

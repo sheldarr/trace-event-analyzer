@@ -8,7 +8,7 @@ if (!argv.path) {
     winston.info(chalk.red('You must pass path argument e.g. --path=./trace.json'));
     process.exit(0);
 }
-
+    
 const traceEvents = TraceEventsLoader.load(argv.path);
 
 console.log(traceEvents);
