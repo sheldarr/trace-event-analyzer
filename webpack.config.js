@@ -26,5 +26,6 @@ module.exports = {
         ]
     },
     plugins: [],
-    devtool: 'eval'
+    devtool: 'eval',
+    target: 'node'
 }

@@ -11,5 +11,10 @@
     "babel-preset-es2015": "^6.24.1",
     "eslint": "^4.8.0",
     "webpack": "^3.7.1"
+  },
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "minimist": "^1.2.0",
+    "winston": "^2.4.0"
   }
 }
