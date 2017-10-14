@@ -4,6 +4,7 @@ import path from 'path';
 import winston from 'winston';
 
 import ArgumentsParser from './src/arguments-parser';
+import CompleteEventsAnalyzer from './src/complete-events-analyzer';
 import ImmediateEventsAnalyzer from './src/immediate-events-analyzer';
 import StatisticsGenerator from './src/statistics-generator';
 import TraceEventsLoader from './src/trace-events-loader';
@@ -32,6 +33,22 @@ paths.forEach((eventsPath) => {
     }
     
     const decimalPlaces = args['decimal-places'] || DEFAULT_DECIMAL_PLACES;
+    const completeEvents = args['complete-events'].replace(' ', '').split(DEFAULT_SEPARATOR);
+    completeEvents.forEach((completeEvent) => {
+        const analysisSummary = CompleteEventsAnalyzer.analyze(events, completeEvent);
+        
+            if(analysisSummary) {
+                if(!summary.completeEvents) {
+                    summary.completeEvents = {};
+                }
+
+                summary.completeEvents[completeEvent] = {
+                    deltas: StatisticsGenerator.generate(analysisSummary.deltas, decimalPlaces),
+                    eps: StatisticsGenerator.generate(analysisSummary.eps, decimalPlaces)
+                };
+            }
+    });
+
     const immediateEvents = args['immediate-events'].replace(' ', '').split(DEFAULT_SEPARATOR);
     immediateEvents.forEach((immediateEvent) => {
         const analysisSummary = ImmediateEventsAnalyzer.analyze(events, immediateEvent);
