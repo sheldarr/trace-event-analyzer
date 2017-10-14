@@ -6,7 +6,6 @@ class StatisticsGenerator {
         return {
             min: statistics.min(data).toFixed(decimalPlaces),
             mean: statistics.mean(data).toFixed(decimalPlaces),
-            median: statistics.median(data).toFixed(decimalPlaces),
             percentiles: {
                 50: percentile(50, data).toFixed(decimalPlaces),
                 66: percentile(66, data).toFixed(decimalPlaces),
