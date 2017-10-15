@@ -9,7 +9,7 @@ import DurationEventsAnalyzer from './src/duration-events-analyzer';
 import ImmediateEventsAnalyzer from './src/immediate-events-analyzer';
 import SeparatedValuesToArray from './src/separated-values-to-array';
 import StatisticsGenerator from './src/statistics-generator';
-import TraceEventsLoader from './src/trace-events-loader';
+import TraceEventFormatLoader from './src/trace-event-format-loader';
 import UniqueEventsAnalyzer from './src/unique-events-analyzer';
 
 const args = ArgumentsParser.parse(process.argv.slice(2));
@@ -46,7 +46,7 @@ const paths = SeparatedValuesToArray.transform(args.paths, args['default-separat
 
 paths.forEach((eventsPath) => {
     const summary = {};
-    const events = TraceEventsLoader.load(eventsPath);
+    const events = TraceEventFormatLoader.load(eventsPath);
 
     if (!events) {
         return;

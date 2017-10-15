@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import fs from 'fs';
 import winston from 'winston';
 
-class TraceEventsLoader {
+class TraceEventFormatLoader {
     static load(path) {
         winston.info(chalk.green(`Loading ${chalk.cyan(path)}`));
         
@@ -14,7 +14,7 @@ class TraceEventsLoader {
         const file = fs.readFileSync(path);
 
         try {
-            return JSON.parse(file).sort(TraceEventsLoader.sortByTimeStamp)
+            return JSON.parse(file).sort(TraceEventFormatLoader.sortByTimeStamp)
         } catch(error) {
             winston.error(error);
             return;
@@ -26,4 +26,4 @@ class TraceEventsLoader {
     }
 }
 
-export default TraceEventsLoader;
+export default TraceEventFormatLoader;

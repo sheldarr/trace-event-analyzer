@@ -1,8 +1,8 @@
 {
-  "name": "trace-events-analyzer",
+  "name": "trace-event-format-analyzer",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/sheldarr/trace-events-analyzer.git",
+  "repository": "https://github.com/sheldarr/trace-event-format-analyzer.git",
   "author": "sheldar <kewin.polok@gmail.com>",
   "license": "MIT",
   "devDependencies": {
