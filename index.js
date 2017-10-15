@@ -14,10 +14,22 @@ import UniqueEventsAnalyzer from './src/unique-events-analyzer';
 
 const args = ArgumentsParser.parse(process.argv.slice(2));
 
+winston.configure({
+    transports: [
+        new winston.transports.Console({ 
+            colorize: true,
+            level: 'info'
+        })
+    ]
+});
+
 if (args.verbose) {
     winston.configure({
         transports: [
-            new winston.transports.Console({ level: 'verbose' })
+            new winston.transports.Console({ 
+                colorize: true,
+                level: 'verbose'
+            })
         ]
     });
 }
