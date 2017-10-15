@@ -1,15 +1,22 @@
-import chalk from 'chalk';
-import winston from 'winston';
+import minimist from 'minimist';
+
+const DEFAULT_DECIMAL_PLACES = 4;
+const DEFAULT_SEPARATOR = ',';
 
 class ArgumentsParser {
     static parse(argv) {
-        const args = require('minimist')(argv);
+        const args = minimist(argv, {
+            default: {
+                'complete-events': '',
+                'duration-events': '',
+                'immediate-events': '',
+                'unique-events': false,
+                'decimal-places': DEFAULT_DECIMAL_PLACES,
+                'default-separator': DEFAULT_SEPARATOR,
+                paths: ''
+            }
+        });
         
-        if (!args.paths) {
-            winston.info(chalk.red('You must pass paths argument e.g. --paths="./trace-event.json"'));
-            process.exit(0);
-        }
-
         return args;
     }
 }
