@@ -13,7 +13,8 @@ class ArgumentsParser {
                 'unique-events': false,
                 'decimal-places': DEFAULT_DECIMAL_PLACES,
                 'default-separator': DEFAULT_SEPARATOR,
-                paths: ''
+                paths: '',
+                output: false
             }
         });
         
