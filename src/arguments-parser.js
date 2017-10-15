@@ -14,7 +14,8 @@ class ArgumentsParser {
                 'decimal-places': DEFAULT_DECIMAL_PLACES,
                 'default-separator': DEFAULT_SEPARATOR,
                 paths: '',
-                output: false
+                output: false,
+                silent: false
             }
         });
         

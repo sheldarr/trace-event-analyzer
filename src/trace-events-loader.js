@@ -4,7 +4,7 @@ import winston from 'winston';
 
 class TraceEventsLoader {
     static load(path) {
-        winston.info(chalk.green(`Loading ${path}`));
+        winston.info(chalk.green(`Loading ${chalk.cyan(path)}`));
         
         if (!fs.existsSync(path)) {
             winston.error(chalk.red(`${path} does not exist!`))

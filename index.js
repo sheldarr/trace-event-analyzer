@@ -14,7 +14,21 @@ import UniqueEventsAnalyzer from './src/unique-events-analyzer';
 
 const args = ArgumentsParser.parse(process.argv.slice(2));
 
-winston.info(`${chalk.green('Provided args')} ${JSON.stringify(args, null, '\t')}`);
+if (args.verbose) {
+    winston.configure({
+        transports: [
+            new winston.transports.Console({ level: 'verbose' })
+        ]
+    });
+}
+
+if (args.silent) {
+    winston.configure({
+        transports: []
+    });
+}
+
+winston.verbose(`${chalk.green('Parsed args')} ${JSON.stringify(args, null, '\t')}`);
 
 const paths = SeparatedValuesToArray.transform(args.paths, args['default-separator']);
 
@@ -81,9 +95,15 @@ paths.forEach((eventsPath) => {
     });
 
     const stringifiedSummary = JSON.stringify(summary, null, '\t');
+    if (!args.output) {
     winston.info(stringifiedSummary);
+    }
 
     if(args.output) {
-        fs.writeFileSync(`./${path.basename(eventsPath).split('.')[0]}.summary.json`, stringifiedSummary, 'utf-8');
+        const filePath = `./${path.basename(eventsPath).split('.')[0]}.summary.json`;
+
+        winston.info(chalk.green(`Writing summary to ${chalk.cyan(filePath)}`));
+
+        fs.writeFileSync(filePath, stringifiedSummary, 'utf-8');
     }
 });
