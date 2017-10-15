@@ -5,7 +5,7 @@ Analyze events in [Trace Event Format](https://docs.google.com/document/d/1CvACl
 ## Parameters
 
 * `--paths` (default `''`) - separated paths to Trace Event Format json files
-* `--default-separator` (default `','`) - separator which will be used to separate other params
+* `--separator` (default `','`) - separator which will be used to separate other params
 * `--decimal-places` (default `4`) - number of decimal places of output statistics
 * `--output` (default `false`) - outputs summary to json file for each provided path: `[pathFileName].summary.json`
 * `--silent` (default `false`) - disables output to console

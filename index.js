@@ -42,7 +42,7 @@ if (args.silent) {
 
 winston.verbose(`${chalk.green('Parsed args')} ${JSON.stringify(args, null, '\t')}`);
 
-const paths = SeparatedValuesToArray.transform(args.paths, args['default-separator']);
+const paths = SeparatedValuesToArray.transform(args.paths, args.separator);
 
 paths.forEach((eventsPath) => {
     const summary = {};
@@ -58,7 +58,7 @@ paths.forEach((eventsPath) => {
     }
     
     const decimalPlaces = args['decimal-places'];
-    const completeEvents = SeparatedValuesToArray.transform(args['complete-events'], args['default-separator']);
+    const completeEvents = SeparatedValuesToArray.transform(args['complete-events'], args.separator);
     completeEvents.forEach((completeEvent) => {
         const analysisSummary = CompleteEventsAnalyzer.analyze(events, completeEvent);
         
@@ -74,7 +74,7 @@ paths.forEach((eventsPath) => {
             }
     });
 
-    const durationEvents = SeparatedValuesToArray.transform(args['duration-events'], args['default-separator']);
+    const durationEvents = SeparatedValuesToArray.transform(args['duration-events'], args.separator);
     durationEvents.forEach((durationEvent) => {
         const analysisSummary = DurationEventsAnalyzer.analyze(events, durationEvent);
         
@@ -90,7 +90,7 @@ paths.forEach((eventsPath) => {
             }
     });
 
-    const immediateEvents = SeparatedValuesToArray.transform(args['immediate-events'], args['default-separator']);
+    const immediateEvents = SeparatedValuesToArray.transform(args['immediate-events'], args.separator);
     immediateEvents.forEach((immediateEvent) => {
         const analysisSummary = ImmediateEventsAnalyzer.analyze(events, immediateEvent);
         

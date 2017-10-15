@@ -12,10 +12,10 @@ class ArgumentsParser {
                 'immediate-events': '',
                 'unique-events': false,
                 'decimal-places': DEFAULT_DECIMAL_PLACES,
-                'default-separator': DEFAULT_SEPARATOR,
                 paths: '',
                 output: false,
-                silent: false
+                silent: false,
+                separator: DEFAULT_SEPARATOR
             }
         });
         
