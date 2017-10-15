@@ -29,6 +29,58 @@ node build/main.js
     --output
 ```
 
+## Output format
+
+
+#### Summary
+```
+{
+    completeEvents: {
+        [eventName: string]?: StatisticsGroup
+    },
+    durationEvents: {
+        [eventName: string]?: StatisticsGroup
+    },
+    immediateEvents: {
+        [eventName: string]?: StatisticsGroup
+    },
+    uniqueEvents?: string[],
+}
+```
+
+#### StatisticsGroup
+Dictionary 
+
+* `deltas` - calculated on time between events (`complete, immediate`) or time between corresponding pairs of events (`begin-end for duration events`)
+* `eps` - events per second (`1000 / delta`)
+```
+{
+    deltas: Statistics,
+    eps: Statistics
+}
+```
+
+#### Statistics
+```
+{
+    min: number[ms],
+    mean: number[ms],
+    percentiles: {
+        50: number[ms],
+        66: number[ms],
+        75: number[ms],
+        80: number[ms],
+        90: number[ms],
+        95: number[ms],
+        98: number[ms],
+        99: number[ms],
+        100: number[ms]
+    },
+    standardDeviation: number[ms],
+    variance: number[ms]
+}
+```
+
 ## License
 
 MIT
