@@ -14,9 +14,13 @@ class CompleteEventsAnalyzer{
             return event.name === eventName;
         })
 
-        const deltas = filteredEvents.map((event) => {
-            return event.dur;
-        })
+        const deltas = filteredEvents
+            .filter((event) => {
+                return event.dur;
+            })
+            .map((event) => {
+                return event.dur;
+            });
         
         return {
             deltas,
